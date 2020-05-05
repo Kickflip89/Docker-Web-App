@@ -36,21 +36,27 @@ const redisPublisher = redisClient.duplicate();
 
 // Express route handlers
 
+//root
 app.get('/', (req, res) => {
   res.send('Hi');
 });
-app.get('/values/all', async (req, resp) => {
-  const values = await pgClient.query('SELECT * from values');
+
+//all values
+app.get('/values/all', async (req, res) => {
+  const values = await pgClient.
+    query('SELECT DISTINCT * from values ORDER BY number');
 
   res.send(values.rows);
 });
 
-app.get('values/current', async (req, res) => {
+//current values
+app.get('/values/current', async (req, res) => {
   redisClient.hgetall('values', (err, val) => {
-    res.send(values);
+    res.send(val);
   });
 });
 
+// get a Fib #
 app.post('/values', async (req,res) => {
   const index = req.body.index;
 
@@ -60,6 +66,7 @@ app.post('/values', async (req,res) => {
 
   redisClient.hset('values', index, 'Nothing yet');
   redisPublisher.publish('insert', index);
+  console.log("index: ", index);
   pgClient.query('INSERT INTO values(number) VALUES($1)', [index]);
 
   res.send({ working: true});
