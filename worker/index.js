@@ -16,6 +16,7 @@ function fib(index){
 
 //get fib value for new indices
 sub.on('message', (channel, message) => {
+  console.log("Fib req", message);
   redisClient.hset('values', message, fib(parseInt(message)));
 });
 sub.subscribe('insert');
