@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t papagiorgio/react-test -f ./client/Dockerfile.dev ./client
+  # docker build myproject
+
+script:
+  - docker run -e CI=true papagiorgio/react-test npm test
+  # docker run myproject mytests (maybe CI=true)
+
+after_success:
+  # build images
+  - docker build -t papagiorgio/multi-client ./client
+  - docker build -t papagiorgio/multi-nginx ./nginx
+  - docker build -t papagiorgio/multi-server ./server
+  - docker built -t papagiorgio/multi-worker ./worker
+  # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to docker-hub
+  - docker push papagiorgio/multi-client
+  - docker push papagiorgio/multi-nginx
+  - docker push papagiorgio/multi-server
+  - docker push papagiorgio/multi-worker
