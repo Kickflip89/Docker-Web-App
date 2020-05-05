@@ -5,7 +5,7 @@ APP OVERVIEW:
 
 Containers
 
-nginx: router, routs requests to either react or express server.
+nginx: router, routes requests to either react or express server.
 
 client: react app client.  fib.js contains logic for routing requests.
 
