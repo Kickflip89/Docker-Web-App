@@ -15,7 +15,7 @@ after_success:
   - docker build -t papagiorgio/multi-client ./client
   - docker build -t papagiorgio/multi-nginx ./nginx
   - docker build -t papagiorgio/multi-server ./server
-  - docker built -t papagiorgio/multi-worker ./worker
+  - docker build -t papagiorgio/multi-worker ./worker
   # Log in to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Push images to docker-hub
