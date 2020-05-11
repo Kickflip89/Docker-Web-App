@@ -22,13 +22,13 @@ spec:
               value: redis-clusterip
             - name: REDIS_PORT
               value: '6379'
-            - name: PGUSER
-              value: postgres
+            - name: POSTGRES_USER
+              value: Kickflip89
             - name: PGHOST
               value: postgres-clusterip
             - name: PGPORT
               value: '5432'
-            - name: PGDATABASE
+            - name: POSTGRES_DB
               value: postgres
             - name: POSTGRES_PASSWORD
               valueFrom:
